@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx.xsd">
+	<!-- 配置C3P0连接池=============================== -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="com.mysql.cj.jdbc.Driver"/>
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/wpobase?useSSL=false&amp;serverTimezone=UTC"/>
+		<property name="user" value="root"/>
+		<property name="password" value="iwgku016"/>
+	</bean>
+	<!--配置Hibernate-->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<!-- 注入连接池 -->
+		<property name="dataSource" ref="dataSource"/>
+		<!-- 配置Hibernate的相关属性 -->
+		<property name="hibernateProperties">
+			<props>
+				<!--配置Hibernate方言-->
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<!--显示SQL-->
+				<prop key="hibernate.show_sql">true</prop>
+				<!--格式化SQL-->
+				<prop key="hibernate.format_sql">true</prop>
+				<!--映射到DDL的自动创建-->
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+			</props>
+		</property>
+
+		 <!--设置映射文件 -->
+		<property name="mappingDirectoryLocations" >
+			<list>
+				<value>classpath:com/bean/resource</value>
+			</list>
+		</property>
+
+	</bean>
+	<!--配置事务管理-->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	<!--开启注解事务-->
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+	<!-- 这里配置后就不用再使用bean标签配置bean了 -->
+	<context:annotation-config />
+	<!-- 去哪个包扫描生成bean -->
+	<context:component-scan base-package="com.*.impl,com.web.action" />
+
+	<!--&lt;!&ndash; 配置Service &ndash;&gt;-->
+	<!--<bean id="projectService" class="com.service.impl.ProjectServiceImpl">-->
+		<!--&lt;!&ndash; 注入DAO的属性 &ndash;&gt;-->
+		<!--<property name="projectDao" ref="projectDao"/>-->
+		<!--<property name="publicDao" ref="publicDao"/>-->
+		<!--<property name="userDao" ref="userDao"/>-->
+	<!--</bean>-->
+	<!--<bean id="fileService" class="com.service.impl.FileServiceImpl">-->
+		<!--<property name="projectDao" ref="projectDao"/>-->
+		<!--<property name="publicDao" ref="publicDao"/>-->
+		<!--<property name="fileDao" ref="fileDao"/>-->
+		<!--<property name="fileTypeDao" ref="fileTypeDao"/>-->
+	<!--</bean>-->
+	<!--<bean id="userService" class="com.service.impl.UserServiceImpl">-->
+		<!--<property name="dao" ref="userDao"/>-->
+		<!--<property name="publicDao" ref="publicDao"/>-->
+		<!--<property name="authorityDao" ref="authorityDao"/>-->
+	<!--</bean>-->
+	<!--<bean id="fileTypeService" class="com.service.impl.FileTypeSeriveImp">-->
+		<!--<property name="dao" ref="fileTypeDao"/>-->
+	<!--</bean>-->
+	<!--&lt;!&ndash; 配置DAO &ndash;&gt;-->
+	<!--<bean id="projectDao" class="com.dao.impl.ProjectDaoImp">-->
+		<!--<property name="sessionFactory" ref="sessionFactory"/>-->
+	<!--</bean>-->
+	<!--<bean id="publicDao" class="com.dao.impl.PublicDaoImpl">-->
+		<!--<property name="sessionFactory" ref="sessionFactory"/>-->
+	<!--</bean>-->
+	<!--<bean id="authorityDao" class="com.dao.impl.AuthorityDaoImp">-->
+		<!--<property name="sessionFactory" ref="sessionFactory"/>-->
+	<!--</bean>-->
+	<!--<bean id="fileDao" class="com.dao.impl.FileDaoImp">-->
+		<!--<property name="sessionFactory" ref="sessionFactory"/>-->
+	<!--</bean>-->
+	<!--<bean id="userDao" class="com.dao.impl.UserDaoImp">-->
+		<!--<property name="sessionFactory" ref="sessionFactory"/>-->
+	<!--</bean>-->
+	<!--<bean id="fileTypeDao" class="com.dao.impl.FileTypeDaoImp">-->
+		<!--<property name="sessionFactory" ref="sessionFactory"/>-->
+	<!--</bean>-->
+	<!--&lt;!&ndash;配置action&ndash;&gt;-->
+	<!--<bean id="projectAction" class="com.web.action.ProjectAction" scope="prototype">-->
+		<!--<property name="projectService" ref="projectService"/>-->
+	<!--</bean>-->
+	<!--<bean id="fileAction" class="com.web.action.FileAction" scope="prototype">-->
+		<!--<property name="projectService" ref="projectService"/>-->
+		<!--<property name="fileService" ref="fileService"/>-->
+	<!--</bean>-->
+	<!--<bean id="fileTypeAction" class="com.web.action.FileTypeAction" scope="prototype">-->
+		<!--<property name="fileTypeService" ref="fileTypeService"/>-->
+	<!--</bean>-->
+	<!--<bean id="userAction" class="com.web.action.UserAction" scope="prototype">-->
+		<!--<property name="userService" ref="userService"/>-->
+	<!--</bean>-->
+</beans>

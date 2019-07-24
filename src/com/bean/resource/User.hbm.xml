@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.bean.User" table="users" schema="wpobase">
+        <id name="userId" column="user_id">
+            <generator class="uuid"/>
+        </id>
+        <property name="userName" column="user_name"/>
+        <property name="userTel" column="user_tel"/>
+        <property name="userPwd" column="user_pwd"/>
+        <property name="userCenter" column="user_center"/>
+        <property name="userActive" column="user_active"/>
+        <many-to-one name="authority" column="user_authority_id" class="com.bean.Authority" insert="false" update="false"/>
+        <property name="authorityId" column="user_authority_id"/>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+    <!-- 开启静态方法访问 -->
+    <constant name="struts.ognl.allowStaticMethodAccess" value="true"/>
+    <constant name="struts.objectFactory" value="spring"/>
+    <package name="struts-shop" extends="json-default" namespace="/">
+        <interceptors>
+            <interceptor name="privilegeInterceptor" class="com.web.interceptor.PrivilegeInterceptor"/>
+
+            <interceptor-stack name="myStack">
+                <interceptor-ref name="privilegeInterceptor">
+                    <param name="excludeMethods">login</param>
+                </interceptor-ref>
+                <interceptor-ref name="defaultStack"/>
+            </interceptor-stack>
+        </interceptors>
+        <default-interceptor-ref name="myStack"/>
+    </package>
+    <package name="demo" extends="struts-shop" namespace="/">
+        <global-results>
+            <result name="login">index.jsp</result>
+            <result name="info">/jsp/info.jsp</result>
+            <result type="json" name="success">
+                <param name="root">result</param>
+            </result>
+        </global-results>
+        <action name="user_*" class="userAction" method="{1}">
+            <result name="loginSuccess" type="redirect">/jsp/main.jsp</result>
+            <result name="findSuccess">/jsp/user/userMange.jsp</result>
+            <result name="select">/jsp/user/userList.jsp</result>
+            <result name="savePage">/jsp/user/saveUser.jsp</result>
+            <result name="saveSuccess" type="redirectAction">
+                <param name="actionName">user_find</param>
+                <param name="authorityId">0</param>
+            </result>
+            <allowed-methods>login,find,checkUserName,logOut,gotoSavePage,detail,save</allowed-methods>
+        </action>
+        <action name="project_*" class="projectAction" method="{1}">
+            <result name="findSuccess">/jsp/project/project.jsp</result>
+            <result name="savePage">/jsp/project/saveProject.jsp</result>
+            <result name="saveSuccess" type="redirectAction">
+                <param name="actionName">project_find</param>
+                <param name="projectTurn">false</param>
+            </result>
+            <result name="saveError">/jsp/project/saveProject.jsp</result>
+
+            <result name="fail" type="redirectAction">
+                <param name="actionName">project_find</param>
+                <param name="projectTurn">false</param>
+                <param name="result">数据更新失败</param>
+            </result>
+            <allowed-methods>find,gotoSavePage,save,detail,turn,checkMis</allowed-methods>
+        </action>
+        <action name="file_*" class="fileAction" method="{1}">
+            <result name="findSuccess">/jsp/file/files.jsp</result>
+            <result name="batchPage">/jsp/file/batch.jsp</result>
+            <result name="saveSuccess" type="redirectAction">
+                <param name="actionName">file_find</param>
+                <param name="projectId">${projectId}</param>
+            </result>
+            <result name="totalPage">/jsp/file/recordCountTable.jsp</result>
+            <result name="catalogue">/jsp/file/catalogue.jsp</result>
+            <result name="savePage">/jsp/file/saveFile.jsp</result>
+            <result name="input">/jsp/file/saveFile.jsp</result>
+            <allowed-methods>find,gotoBatchPage,batchSave,gotoCountPage,catalogue,gotoSavePage,getNewRecordNum,getFileDetail,downLoadExcel</allowed-methods>
+        </action>
+        <action name="fileType_*" class="fileTypeAction" method="{1}">
+            <allowed-methods>totalType,getTopName,getSecName</allowed-methods>
+        </action>
+        <action name="order_*" class="com.web.action.OrderAction" method="{1}">
+
+            <allowed-methods>getOrderTypes,newOrder</allowed-methods>
+        </action>
+    </package>
+
+</struts>

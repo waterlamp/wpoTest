@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.bean.Fee" table="fees" schema="wpobase">
+        <id name="feeId" column="fee_id">
+            <generator class="native"/>
+        </id>
+        <property name="feeType" column="fee_type"/>
+        <property name="feePact" column="fee_pact"/>
+        <property name="feeAudit" column="fee_audit"/>
+        <property name="feeAuditMoney" column="fee_audit_money"/>
+        <property name="feePrev" column="fee_prev"/>
+        <property name="feePercent" column="fee_percent"/>
+        <property name="feeNow" column="fee_now"/>
+        <property name="feeExpenses" column="fee_expenses"/>
+        <property name="feeSubtotal" column="fee_subtotal"/>
+        <many-to-one name="progress" class="com.bean.Progress" column="fee_progress_id"/>
+    </class>
+</hibernate-mapping>

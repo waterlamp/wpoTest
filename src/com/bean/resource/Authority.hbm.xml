@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.bean.Authority" table="authoritys" schema="wpobase">
+        <id name="authorityId" column="authority_id">
+            <generator class="native"/>
+        </id>
+        <property name="authorityName" column="authority_name"/>
+        <property name="authorityManage" column="authority_manage"/>
+        <property name="authorityPm" column="authority_pm"/>
+        <property name="authorityAffairs" column="authority_affairs"/>
+    </class>
+</hibernate-mapping>

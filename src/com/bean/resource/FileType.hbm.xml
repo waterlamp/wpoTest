@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.bean.FileType" table="filetypes" schema="wpobase">
+        <id name="filetypeId" column="filetype_id">
+            <generator class="native"/>
+        </id>
+        <property name="filetypeName" column="filetype_name"/>
+        <property name="filetypeFid" column="filetype_fid"/>
+    </class>
+</hibernate-mapping>

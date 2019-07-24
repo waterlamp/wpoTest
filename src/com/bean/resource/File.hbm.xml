@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.bean.File" table="files" schema="wpobase">
+        <id name="fileId" column="file_id">
+            <generator class="native"/>
+        </id>
+        <property name="fileRecordNum" column="file_record_num"/>
+        <property name="fileBoxNum" column="file_box_num"/>
+        <property name="fileNum" column="file_num"/>
+        <property name="fileCompany" column="file_company"/>
+        <property name="fileName" column="file_name"/>
+        <property name="fileDate" column="file_date"/>
+        <property name="fileCount" column="file_count"/>
+        <property name="fileTypeId" column="file_fileType_id"/>
+        <many-to-one name="fileType" class="com.bean.FileType" column="file_fileType_id" lazy="false" insert="false" update="false"/>
+        <property name="projectId" column="file_project_id"/>
+        <many-to-one name="project" class="com.bean.Project" column="file_project_id" insert="false" update="false"/>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.bean.Project" table="projects" schema="wpobase">
+        <id name="projectId" column="project_id">
+            <generator class="native"/>
+        </id>
+        <property name="userId" column="project_users_id"/>
+        <property name="projectMis" column="project_mis"/>
+        <property name="projectName" column="project_name"/>
+        <property name="projectFindate" column="project_findate"/>
+        <property name="projectPredate" column="project__predate"/>
+        <property name="projectTurn" column="project_turn"/>
+        <property name="projectTurndate" column="project_turndate"/>
+        <property name="projectAddress" column="project_address"/>
+        <property name="projectType" column="project_type"/>
+        <property name="projectStorageLife" column="project_storage_life"/>
+        <property name="projectBoxsCount" column="project_boxs_count"/>
+        <property name="projectFilesCount" column="project_files_count"/>
+
+        <many-to-one name="user" class="com.bean.User" column="project_users_id" insert="false"  update="false"/>
+        <!--<set name="files" inverse="true" cascade="delete" lazy="false">-->
+            <!--<key column="file_project_id"/>-->
+            <!--<one-to-many class="com.bean.File"/>-->
+        <!--</set>-->
+    </class>
+</hibernate-mapping>

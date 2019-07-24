@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.bean.OrderFlow" table="orderflow" schema="wpobase">
+        <id name="orderflowId" column="orderflow_id">
+            <generator class="native"/>
+        </id>
+        <property name="orderflowName" column="orderflow_name"/>
+        <property name="orderflowPrev" column="orderflow_prev"/>
+        <property name="orderTypeId" column="orderflow_ordertype_id"/>
+    </class>
+</hibernate-mapping>
